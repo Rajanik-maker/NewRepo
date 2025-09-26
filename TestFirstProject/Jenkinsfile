@@ -8,7 +8,7 @@ pipeline{
     stage('Checkpoint'){
       steps{
         echo 'Cloning code from GitHub...'
-        git branch: ''main',url:'https://github.com/Rajanik-maker/NewRepo.git'
+        git branch: 'main',url:'https://github.com/Rajanik-maker/NewRepo.git'
           }
     }
     stage('Test'){
