@@ -1,1 +1,35 @@
-
+pipeline{
+  agent any
+  tools{
+    maven 'maven3'
+    jdk 'java17'
+  }
+  stages{
+    stage('Checkpoint'){
+      steps{
+        echo 'Cloning code from GitHub...'
+        git branch: ''main',url:'https://github.com/Rajanik-maker/NewRepo.git'
+          }
+    }
+    stage('Test'){
+      steps{
+        echo 'Running Unit tests..'
+        sh 'mvn test'
+      }
+      post{
+        always {
+          echo 'Publishing JUnit test results...'
+          junit '**/target/surefire-reports/*.xml'
+        }
+      }
+    }
+  }
+  post {
+    success {
+      echo 'Build and tests completed successfully !'
+    }
+    failure {
+      echo 'Build failed check logs.'
+    }
+  }
+}
