@@ -2,7 +2,7 @@ pipeline{
   agent any
   tools{
     maven 'Maven-Local'
-    jdk 'java17'
+    jdk 'java-Local'
   }
   stages{
     stage('Checkpoint'){
