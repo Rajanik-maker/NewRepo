@@ -14,24 +14,32 @@ pipeline{
 
     stage('Build'){
       steps {
+        echo 'Compiling the Project...'
+        dir('TestFirstProject'){
         bat 'mvn clean compile'
       }
+    }
     }
     
     stage('Test'){
       steps{
         echo 'Running Unit tests..'
+        dir('TestFirstProject'){
         bat 'mvn test'
       }
     }
-    
+    }
     stage('package'){
       steps {
+        echo 'Packaging the Project...'
+        dir('TestFirstProject'){
         bat 'mvn package'
+      }
       }
       post {
         success {
-          archiveArtifacts artifacts: 'target/*.jar',fingerprint: true
+          echo 'Archiving the JAR files...'
+          archiveArtifacts artifacts: 'TestFirstProject/target/*.jar',fingerprint: true
         }
       }
     }
