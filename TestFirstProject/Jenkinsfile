@@ -7,12 +7,12 @@ pipeline{
   stages{
     stage('Checkout'){
       steps{
-        echo 'Cloning code from GitHub...'
+        echo 'Cloning code from GitHub..'
         git branch: 'main',url:'https://github.com/Rajanik-maker/NewRepo.git'
           }
     }
 
-    stage(Build){
+    stage('Build'){
       steps {
         bat 'mvn clean compile'
       }
@@ -31,7 +31,7 @@ pipeline{
       }
       post {
         success {
-          archiveArtifacts artifacts: 'target/*.jar',fingeprint: true
+          archiveArtifacts artifacts: 'target/*.jar',fingerprint: true
         }
       }
     }
