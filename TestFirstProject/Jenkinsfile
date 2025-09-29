@@ -5,31 +5,35 @@ pipeline{
     jdk 'Java-Local'
   }
   stages{
-    stage('Checkpoint'){
+    stage('Checkout'){
       steps{
         echo 'Cloning code from GitHub...'
         git branch: 'main',url:'https://github.com/Rajanik-maker/NewRepo.git'
           }
     }
+
+    stage(Build){
+      steps {
+        bat 'mvn clean compile'
+      }
+    }
+    
     stage('Test'){
       steps{
         echo 'Running Unit tests..'
-        sh 'mvn test'
+        bat 'mvn test'
       }
-      post{
-        always {
-          echo 'Publishing JUnit test results...'
-          junit '**/target/surefire-reports/*.xml'
+    }
+    
+    stage('package'){
+      steps {
+        bat 'mvn package'
+      }
+      post {
+        success {
+          archiveArtifacts artifacts: 'target/*.jar',fingeprint: true
         }
       }
-    }
-  }
-  post {
-    success {
-      echo 'Build and tests completed successfully !'
-    }
-    failure {
-      echo 'Build failed check logs.'
     }
   }
 }
