@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.annotations.DataProvider;
 
-public class DataProTest {
+public class DataPro {
   @Test(dataProvider = "dp")
   public void f(String UN, String PW) 
   {
